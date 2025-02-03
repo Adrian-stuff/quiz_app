@@ -31,6 +31,33 @@ class QuestionStorage {
   final Localstore _db = Localstore.instance;
   final String _collectionName = 'questions';
 
+  Future<void> setDiff(int difficulty) async {
+    try {
+      print("Setting difficulty to $difficulty");
+      await _db
+          .collection("difficulty")
+          .doc("unlockDiff")
+          .set({"unlockDiff": difficulty});
+    } catch (e) {
+      print('Error setting difficulty: $e');
+    }
+  }
+
+  Future<int> getDiff() async {
+    try {
+      final items = await _db.collection("difficulty").get();
+      if (items != null) {
+        print(items["unlockDiff"]);
+        return items["unlockDiff"]["unlockDiff"] as int;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      print('Error getting difficulty: $e');
+      return 0;
+    }
+  }
+
   Future<void> storeQuestions(List<Question> questions, int difficulty) async {
     try {
       final questionMaps = questions.map((q) => q.toMap()).toList();

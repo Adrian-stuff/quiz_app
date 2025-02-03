@@ -7,7 +7,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   QuestionStorage questionStorage = QuestionStorage();
   List<Question> loadedQuestions = await questionStorage.loadQuestions(1);
-
   // Sample questions
   List<Question> hardQuestions = [
     Question(
@@ -332,6 +331,7 @@ void main() async {
     await questionStorage.storeQuestions(easyQuestions, 1);
     await questionStorage.storeQuestions(mediumQuestions, 2);
     await questionStorage.storeQuestions(hardQuestions, 3);
+    await questionStorage.setDiff(1);
   }
   runApp(const MyApp());
 }

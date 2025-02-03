@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz_app/db.dart';
 import 'package:quiz_app/quiz.dart';
 
-class DifficultySelection extends StatelessWidget {
+class DifficultySelection extends StatefulWidget {
   const DifficultySelection({super.key});
 
+  @override
+  State<DifficultySelection> createState() => _DifficultySelectionState();
+}
+
+class _DifficultySelectionState extends State<DifficultySelection> {
+  int unlockDiff = 1;
+  QuestionStorage question = QuestionStorage();
   void _navigateToQuizPage(BuildContext context, int difficulty) {
     Navigator.push(
       context,
@@ -13,6 +21,22 @@ class DifficultySelection extends StatelessWidget {
             QuizPage(difficulty: difficulty), // Pass difficulty to QuizPage
       ),
     );
+  }
+
+  void checkDiff() async {
+    await question.getDiff().then((value) {
+      setState(() {
+        unlockDiff = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    checkDiff();
   }
 
   @override
@@ -39,7 +63,8 @@ class DifficultySelection extends StatelessWidget {
             width: deviceWidth * 0.4, // 40% of screen width
             height: deviceHeight * 0.07, // 7% of screen height
             child: ElevatedButton(
-              onPressed: () => _navigateToQuizPage(context, 1),
+              onPressed:
+                  unlockDiff < 1 ? null : () => _navigateToQuizPage(context, 1),
               child: Text(
                 'Easy',
                 style: GoogleFonts.lilitaOne(fontSize: deviceWidth * 0.05),
@@ -53,7 +78,8 @@ class DifficultySelection extends StatelessWidget {
             width: deviceWidth * 0.4,
             height: deviceHeight * 0.07,
             child: ElevatedButton(
-              onPressed: () => _navigateToQuizPage(context, 2),
+              onPressed:
+                  unlockDiff < 2 ? null : () => _navigateToQuizPage(context, 2),
               child: Text(
                 'Medium',
                 style: GoogleFonts.lilitaOne(fontSize: deviceWidth * 0.05),
@@ -67,7 +93,8 @@ class DifficultySelection extends StatelessWidget {
             width: deviceWidth * 0.4,
             height: deviceHeight * 0.07,
             child: ElevatedButton(
-              onPressed: () => _navigateToQuizPage(context, 3),
+              onPressed:
+                  unlockDiff < 3 ? null : () => _navigateToQuizPage(context, 3),
               child: Text(
                 'Hard',
                 style: GoogleFonts.lilitaOne(fontSize: deviceWidth * 0.05),

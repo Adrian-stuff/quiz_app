@@ -4,6 +4,7 @@ import 'package:quiz_app/db.dart';
 import 'package:quiz_app/home.dart';
 import 'package:quiz_app/question.dart';
 import 'package:confetti/confetti.dart'; // Import Confetti library
+import 'package:localstore/localstore.dart';
 
 class QuizPage extends StatefulWidget {
   final int difficulty;
@@ -19,6 +20,7 @@ class _QuizPageState extends State<QuizPage> {
   int index = 0;
   List<Question> loadedQuestions = [];
   late ConfettiController _confettiController; // Confetti controller
+  final Localstore _db = Localstore.instance;
 
   void onAnswerSelected(String value) async {
     // add delay
@@ -66,6 +68,13 @@ class _QuizPageState extends State<QuizPage> {
 
   // Method to show the completion dialog
   void _showQuizCompletedDialog() {
+    if (score == loadedQuestions.length) {
+      // Unlock the next difficulty level
+      _db
+          .collection("difficulty")
+          .doc("unlockDiff")
+          .set({"unlockDiff": widget.difficulty + 1});
+    }
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
