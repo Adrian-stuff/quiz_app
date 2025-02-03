@@ -81,7 +81,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
               onPressed:
                   unlockDiff < 2 ? null : () => _navigateToQuizPage(context, 2),
               child: Text(
-                'Medium',
+                'Average',
                 style: GoogleFonts.lilitaOne(fontSize: deviceWidth * 0.05),
               ),
             ),
@@ -96,7 +96,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
               onPressed:
                   unlockDiff < 3 ? null : () => _navigateToQuizPage(context, 3),
               child: Text(
-                'Hard',
+                'Difficult',
                 style: GoogleFonts.lilitaOne(fontSize: deviceWidth * 0.05),
               ),
             ),

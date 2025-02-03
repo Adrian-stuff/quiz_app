@@ -78,10 +78,12 @@ class _QuizPageState extends State<QuizPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text(
-          'Quiz Completed',
-          textAlign: TextAlign.center,
-        ),
+        title: score < loadedQuestions.length
+            ? Text("Better Luck Next Time!")
+            : Text(
+                'Quiz Completed, New Difficulty Unlocked!',
+                textAlign: TextAlign.center,
+              ),
         content: Stack(
           alignment: Alignment.center,
           children: [
