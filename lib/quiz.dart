@@ -94,7 +94,7 @@ class _QuizPageState extends State<QuizPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Your score is $score',
+                  'Your score is $score / ${loadedQuestions.length}',
                   style: GoogleFonts.lilitaOne(fontSize: 24),
                 ),
                 const SizedBox(height: 20),
